@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
-import { Counter } from '../components/counter';
+import { Counter } from '../features/counter';
+import { PokemonList } from '../features/pokeapi/components/Pokemon';
 
 export default function Home()
 {
@@ -11,6 +12,7 @@ export default function Home()
       </Head>
       <div>
         <Counter/>
+        <PokemonList/>
       </div>
     </>
   );

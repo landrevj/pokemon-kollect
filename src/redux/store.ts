@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { counterReducer } from '../components/counter';
+import { counterReducer } from '../features/counter';
+import { pokeapiReducer } from '../features/pokeapi';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer
+    counter: counterReducer,
+    pokeapi: pokeapiReducer,
   },
 });
 
