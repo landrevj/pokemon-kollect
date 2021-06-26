@@ -15,9 +15,20 @@ body {
 body::before {
   z-index: -10;
   content: '';
-  background-size: 400% 400%;
+  background-size: 200% 200%;
   @apply block fixed w-screen h-screen;
-  @apply animate-bg-gradient-shift bg-gradient-to-tr from-red-800 via-red-500 to-yellow-500 filter saturate-[0.7];
+  @apply animate-bg-gradient-shift bg-gradient-to-tr from-green-700 to-green-400 filter saturate-[0.7];
+}
+
+*:focus {
+  @apply ring-4 ring-blue-500;
+}
+
+.hero {
+  @apply bg-no-repeat bg-cover;
+  z-index: -10;
+  background-image: url('../../public/bgs/forest.png');
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.75) 80%, transparent 100%);
 }
 
 a {

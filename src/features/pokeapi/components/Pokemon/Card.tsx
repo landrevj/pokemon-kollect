@@ -26,10 +26,11 @@ interface PokemonCardProps
 }
 
 const bgs = [ beachshore, city, dampcave, deepsea, desert, earthycave, forest ];
+const t = sample(bgs);
 
 export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardProps)
 {
-  const { id, name, weight, height, sprites, species: { name: speciesName }, stats, types } = pokemon;
+  const { name, weight, height, sprites, species: { name: speciesName }, stats, types } = pokemon;
 
   const catchPokemonButton = onCatchPokemon && (
     <button
@@ -37,8 +38,8 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
       aria-label='catch pokemon'
       className={clsx(
         'absolute w-full h-full top-0 flex flex-col justify-center place-items-center',
-        'invisible group-hover:visible',
-        'bg-black bg-opacity-30 group-hover:backdrop-blur text-white'
+        'opacity-0 hover:opacity-100 focus:opacity-100',
+        'bg-black bg-opacity-30 hover:backdrop-blur focus:backdrop-blur text-white'
       )}
       onClick={() => onCatchPokemon(pokemon)}
     >
@@ -48,11 +49,11 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
 
   return (
     <figure className={clsx('rounded overflow-hidden bg-gray-300', className)}>
-      <div className='relative group'>
+      <div className='relative'>
         <Image
           priority
           layout='responsive'
-          src={sample(bgs) || bgs[0]} 
+          src={sample(bgs) || forest} 
           alt={`Background sprite`}
           />
         <div className='absolute top-0 w-full h-full flex flex-row justify-center place-items-center'>
@@ -95,3 +96,26 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
 PokemonCard.defaultProps = {
   className: '',
 };
+
+export function PokemonCardSkeleton()
+{
+  return (
+    <div className='h-72 bg-gray-300 rounded overflow-hidden flex flex-col animate-pulse'>
+      <div className='w-full h-36 bg-white'/>
+      
+      <div className='flex-grow p-2 flex flex-col gap-2'>
+
+        <div className='w-full h-6 bg-white rounded-full'/>
+
+        <div className='flex flex-row flex-wrap justify-center gap-2'>
+          <div className='w-16 h-6 bg-white rounded-full'/>
+          <div className='w-16 h-6 bg-white rounded-full'/>
+          <div className='w-12 h-6 bg-white rounded-full'/>
+        </div>
+
+        <div className='flex-grow w-full h-10 bg-white rounded'/>
+
+      </div>
+    </div>
+  );
+}
