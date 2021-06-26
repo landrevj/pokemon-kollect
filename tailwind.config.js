@@ -6,6 +6,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      animation: {
+        'bg-gradient-shift': 'bg-gradient-shift 30s ease infinite',
+        'bg-gradient-shift-fast': 'bg-gradient-shift 10s ease-in-out infinite',
+        'fade-in': 'fade-in 0.25s ease-in'
+      },
       colors: {
         gray: colors.trueGray,
         cyan: colors.cyan,

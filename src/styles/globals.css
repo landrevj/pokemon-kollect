@@ -12,6 +12,14 @@ body {
   @apply text-base text-gray-700;
 }
 
+body::before {
+  z-index: -10;
+  content: '';
+  background-size: 400% 400%;
+  @apply block fixed w-screen h-screen;
+  @apply animate-bg-gradient-shift bg-gradient-to-tr from-red-800 via-red-500 to-yellow-500 filter saturate-[0.7];
+}
+
 a {
   color: inherit;
   text-decoration: none;

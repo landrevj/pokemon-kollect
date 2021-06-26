@@ -2,13 +2,18 @@ import React from 'react';
 import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
 
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { fetchRandomPokemon, selectPokemon } from '../../features/pokeapi/pokeapiSlice';
 import { PokemonList } from '../../features/pokeapi/components/Pokemon';
+import { Pokemon } from '../../features/pokeapi';
+import { caughtPokemon } from '../../features/catch';
 
 export default function Catch()
 {
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const pokemon = useAppSelector(selectPokemon);
 
@@ -16,12 +21,13 @@ export default function Catch()
 
   useEffect(() => {
 
-    if (status === 'idle') dispatch(fetchRandomPokemon(10));
+    dispatch(fetchRandomPokemon(10));
 
-  }, [status, dispatch]);
+  }, [dispatch]);
 
-  const handleCatchPokemon = (id: number) => {
-    console.log(id);
+  const handleCatchPokemon = (poke: Pokemon) => {
+    dispatch(caughtPokemon(poke));
+    router.push('/', undefined, { scroll: true });
   };
 
   return (

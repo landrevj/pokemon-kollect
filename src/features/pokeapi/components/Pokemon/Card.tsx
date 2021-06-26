@@ -21,7 +21,7 @@ import { PokemonStatTable } from './StatTable';
 interface PokemonCardProps
 {
   pokemon: Pokemon;
-  onCatchPokemon?: (id: number) => void;
+  onCatchPokemon?: (poke: Pokemon) => void;
   className?: string;
 }
 
@@ -40,7 +40,7 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
         'invisible group-hover:visible',
         'bg-black bg-opacity-30 group-hover:backdrop-blur text-white'
       )}
-      onClick={() => onCatchPokemon(id)}
+      onClick={() => onCatchPokemon(pokemon)}
     >
       Click to catch!
     </button>
