@@ -1,26 +1,61 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { random } from 'lodash';
 
 import type { RootState } from '../../redux';
-import { Endpoint, QueryResponse, QueryResult } from './types';
+import { fetchArrayToJson } from '../../utils';
+import { Endpoint, QueryParams, QueryResponse, NamedAPIResource, Pokemon } from './types';
 
 interface PokeapiState {
-  response?: QueryResponse;
+  pokemon: Pokemon[];
 
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 };
 
 const initialState: PokeapiState = {
-  response: undefined,
+  pokemon: [],
   status: 'idle',
   error: null,
 };
 
-export const fetchSearchResults = createAsyncThunk<QueryResponse, Endpoint>('pokeapi/fetchSearchResults', async (endpoint) => {
-  const response = await fetch(`https://pokeapi.co/api/v2/${endpoint}`);
-  const results: QueryResponse = await response.json();
+export const fetchPokemon = createAsyncThunk<Pokemon[], { limit?: number, offset?: number }>(
+  'pokeapi/fetchSearchResults',
+  async ({ limit = 10, offset = 0 }) => {
 
-  return results;
+    const countResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+    const responseJson: QueryResponse = await countResponse.json();
+    const urls = responseJson.results.map(res => res.url);
+    
+    const pokemon = await fetchArrayToJson<Pokemon>(urls);
+
+    return pokemon;
+});
+
+export const fetchRandomPokemon = createAsyncThunk<Pokemon[], number>(
+  'pokeapi/fetchSearchResults',
+  async (limit) => {
+
+    // get the max id
+    const countResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1');
+    const { count }: QueryResponse = await countResponse.json();
+
+    // create `limit` number of queries with random offsets
+    const randomSet = new Set<number>();
+    while (randomSet.size !== limit) // make sure the random offsets are unique
+    {
+      randomSet.add(random(1, count));
+    }
+
+    const selected = Array.from(randomSet).map(offset => `https://pokeapi.co/api/v2/pokemon?limit=1&offset=${offset}`);
+    
+    // get the ids from the results of those queries
+    const selections = await fetchArrayToJson<QueryResponse>(Array.from(selected));
+    const urls = selections.map(select => select.results[0].url);
+
+    // get those pokemon
+    const pokemon = await fetchArrayToJson<Pokemon>(urls);
+
+    return pokemon;
 });
 
 export const pokeapiSlice = createSlice({
@@ -31,22 +66,21 @@ export const pokeapiSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchSearchResults.pending, state => {
+      .addCase(fetchRandomPokemon.pending, state => {
         state.status = 'loading';
       })
-      .addCase(fetchSearchResults.fulfilled, (state, action) => {
+      .addCase(fetchRandomPokemon.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.response = action.payload;
+        state.pokemon = action.payload;
       })
-      .addCase(fetchSearchResults.rejected, (state, action) => {
+      .addCase(fetchRandomPokemon.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || null;
       });
   }
 });
 
-export const selectResponse = (state: RootState) => state.pokeapi.response;
-export const selectResults = (state: RootState) => state.pokeapi.response?.results;
+export const selectPokemon = (state: RootState) => state.pokeapi.pokemon;
 
 export const {  } = pokeapiSlice.actions;
 export default pokeapiSlice.reducer;

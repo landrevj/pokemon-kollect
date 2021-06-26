@@ -1,30 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../../redux';
-import { fetchSearchResults, selectResponse, selectResults } from '../../pokeapiSlice';
+import { Pokemon } from '../../types';
+import { PokemonCard } from './Card';
 
-
-export function PokemonList()
+interface PokemonListProps
 {
-  const dispatch = useAppDispatch();
-  const response = useAppSelector(selectResponse);
-  const pokemon = response?.results;
+  pokemon: Pokemon[];
+  onCatchPokemon?: (id: number) => void;
+}
 
-  console.log('pokemon', pokemon);
-
-  const resultStatus = useAppSelector(state => state.pokeapi.status);
-
-  useEffect(() => {
-
-    if (resultStatus === 'idle') dispatch(fetchSearchResults('pokemon'));
-
-  }, [resultStatus, dispatch]);
-
+export function PokemonList({ pokemon, onCatchPokemon }: PokemonListProps)
+{
   return (
-    <ul>
-      {resultStatus}
-      {pokemon?.map((poke, i) => (
-        <li key={i}>{poke.name}</li>
+    <ul className='grid grid-flow-row grid-cols-fill-56 place-items-start gap-2'>
+      {pokemon?.map(poke => (
+        <li key={poke.id} className='w-full'>
+          <PokemonCard pokemon={poke} onCatchPokemon={onCatchPokemon}/>
+        </li>
       ))}
     </ul>
   );
