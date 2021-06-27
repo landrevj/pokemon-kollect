@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { random } from 'lodash';
 
 import type { RootState } from '../../redux';
 import { fetchArrayToJson } from '../../utils';
-import { Ability, QueryResponse, Pokemon } from './types';
+import { QueryResponse, Pokemon } from './types';
 
 interface PokemonState
 {

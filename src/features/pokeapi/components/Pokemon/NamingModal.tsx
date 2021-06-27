@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from '../../../../components';
 import { Pokemon } from '../../types';
 import { PokemonImage } from './Image';
-import { PokemonStat } from './Stats';
-import { PokemonStatBubbles } from './Stats/StatBubbles';
+import { PokemonStatBubbles } from './Stats';
 
 interface PokemonNamingModalProps
 {

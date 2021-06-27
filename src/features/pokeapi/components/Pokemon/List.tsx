@@ -1,9 +1,7 @@
-import { partial } from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Pokemon } from '../../types';
 import { PokemonCard, PokemonCardSkeleton } from './Card';
-import { PokemonAbilityModal } from './AbilityModal';
 
 interface PokemonListProps
 {

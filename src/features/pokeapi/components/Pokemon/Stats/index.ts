@@ -1,2 +1,3 @@
+export * from './Bubbles';
 export * from './Stat';
-export * from './StatTable';
+export * from './Table';

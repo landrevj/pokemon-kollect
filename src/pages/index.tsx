@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import { useAppDispatch, useAppSelector } from '../redux';
-import { Card, CardHeader, Modal, Hero } from '../components';
+import { Card, CardHeader, Hero } from '../components';
 import { releasedPokemonByIndex, selectPokemon } from '../features/catch';
 import { PokemonList } from '../features/pokeapi/components/Pokemon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

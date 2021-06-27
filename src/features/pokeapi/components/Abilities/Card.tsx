@@ -9,7 +9,6 @@ interface AbilityCardProps
 
 export function AbilityCard({ ability, verbose }: AbilityCardProps)
 {
-  console.log(ability.names)
   const englishName = ability.names.find(name => name.language.name === 'en');
   const englishEffect = ability.effect_entries.find(entry => entry.language.name === 'en');
 

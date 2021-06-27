@@ -8,7 +8,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { fetchRandomPokemon, selectPokemonArray } from '../../features/pokeapi/pokemonSlice';
-import { PokemonAbilityModal, PokemonList, PokemonNamingModal } from '../../features/pokeapi/components/Pokemon';
+import { PokemonList, PokemonNamingModal } from '../../features/pokeapi/components/Pokemon';
 import { caughtPokemon, NamedPokemon } from '../../features/catch';
 import { Card, CardHeader, Hero } from '../../components';
 

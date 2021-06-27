@@ -3,11 +3,11 @@ import clsx from 'clsx';
 import { capitalize } from 'lodash';
 
 import { PokemonAbilityModal } from '../AbilityModal';
-import { PokemonStatTable, PokemonStatTableSkeleton } from '../Stats/StatTable';
+import { PokemonStatTable, PokemonStatTableSkeleton } from '../Stats/Table';
 import { PokemonImage } from '../Image';
 import { NamedPokemon } from '../../../../catch';
 import Link from 'next/link';
-import { PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats/StatBubbles';
+import { PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats/Bubbles';
 
 interface PokemonCardProps
 {

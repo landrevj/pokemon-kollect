@@ -1,13 +1,10 @@
 import { capitalize } from 'lodash';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Card } from '../../../../../components/Card';
 import { Pokemon } from '../../../types';
 import { PokemonImage } from '../Image';
-import { PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats/StatBubbles';
-import { PokemonStatTable } from '../Stats/StatTable';
-import { useAppDispatch, useAppSelector } from '../../../../../redux';
-import { fetchAbilitiesByPokemon, selectAbilities } from '../../../abilitySlice';
+import { PokemonStatTable, PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats';
 import { PokemonAbilityList } from '../AbilityList';
 
 interface PokemonFullCardProps
