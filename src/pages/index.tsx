@@ -45,7 +45,7 @@ export default function Home()
         <section aria-label='your pokémon' className='w-full px-[15%] flex flex-col -mt-20'>
           <CardHeader text='Your Pokémon' />
           <Card label='list of caught pokémon' translucent='bg-opacity-25' >
-            <PokemonList pokemon={pokemon}/>
+            <PokemonList pokemon={pokemon} mode='linkToPokemon'/>
             {pokemon.length === 0 && (
               <div className='w-full p-8 text-white flex flex-row justify-center place-items-center text-xl'>
                 Nothing here yet!

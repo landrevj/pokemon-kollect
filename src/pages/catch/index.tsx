@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch, useAppSelector } from '../../redux';
-import { fetchRandomPokemon, selectPokemon } from '../../features/pokeapi/pokeapiSlice';
+import { fetchRandomPokemon, selectPokemonArray } from '../../features/pokeapi/pokeapiSlice';
 import { PokemonList, PokemonNamingModal } from '../../features/pokeapi/components/Pokemon';
 import { caughtPokemon, NamedPokemon } from '../../features/catch';
 import { Card, CardHeader, Hero } from '../../components';
@@ -17,7 +17,7 @@ export default function Catch()
   const router = useRouter();
 
   const dispatch = useAppDispatch();
-  const pokemon = useAppSelector(selectPokemon);
+  const pokemon = useAppSelector(selectPokemonArray);
 
   const status = useAppSelector(state => state.pokeapi.status);
 
@@ -30,7 +30,7 @@ export default function Catch()
   const [namingModalOpen, setNamingModalOpen] = useState(false);
 
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState<number | undefined>();
-  const selectedPokemon = selectedPokemonIndex !== undefined ? pokemon[selectedPokemonIndex] : undefined;
+  const selectedPokemon = selectedPokemonIndex !== undefined && pokemon ? pokemon[selectedPokemonIndex] : undefined;
 
   function handleCatchPokemon(name: string)
   {
@@ -54,7 +54,7 @@ export default function Catch()
           <Link href='/'>
             <a className='text-white space-x-2 mb-10 drop-shadow place-self-start'>
               <FontAwesomeIcon icon={faArrowLeft}/>
-              <span>back</span>
+              <span>home</span>
             </a>
           </Link>
 
@@ -70,7 +70,7 @@ export default function Catch()
 
           <Card label='list of catchable pokémon' translucent='bg-opacity-25'>
             {status !== 'failed' ? 
-              <PokemonList loading={status === 'loading' || status === 'idle'} pokemon={pokemon} onClickPokemon={setSelectedPokemonIndex} selectedIndex={selectedPokemonIndex}/>
+              <PokemonList loading={status === 'loading' || status === 'idle'} mode='clickable' pokemon={Array.isArray(pokemon) ? pokemon : []} onClickPokemon={setSelectedPokemonIndex} selectedIndex={selectedPokemonIndex}/>
             : (
               <>fail</>
             )}

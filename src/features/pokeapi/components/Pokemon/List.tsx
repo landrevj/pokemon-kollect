@@ -9,6 +9,8 @@ interface PokemonListProps
   loading?: boolean;
   selectedIndex?: number;
   pokemon: Pokemon[];
+
+  mode?: 'linkToPokemon' | 'clickable';
   onClickPokemon?: (pokeIndex: number) => void;
 }
 
@@ -18,17 +20,21 @@ const skeletons = [...Array(5)].map((_, i) =>
   </li>
 );
 
-export function PokemonList({ loading, selectedIndex, pokemon, onClickPokemon }: PokemonListProps)
+export function PokemonList({ loading, selectedIndex, pokemon, mode, onClickPokemon }: PokemonListProps)
 {
-  // const loading=true;
   return (
     <ul className='grid grid-flow-row grid-cols-fill-56 place-items-start gap-4'>
       {loading ? skeletons :
-        pokemon?.map((poke, i) => (
-          <li key={`${poke.id}_${i}`} className='w-full'>
-            <PokemonCard pokemon={poke} selected={selectedIndex === i} onClickPokemon={onClickPokemon && ( () => onClickPokemon(i) )}/>
-          </li>
-        )
+        pokemon?.map((poke, i) => {
+
+          const clickHandler = mode === 'clickable' && onClickPokemon ? () => onClickPokemon(i) : undefined;
+
+          return (
+            <li key={`${poke.id}_${i}`} className='w-full'>
+              <PokemonCard pokemon={poke} linkToPokemon={mode === 'linkToPokemon'} selected={selectedIndex === i} onClickPokemon={clickHandler}/>
+            </li>
+          )
+        }
       )}
     </ul>
   );
@@ -36,5 +42,6 @@ export function PokemonList({ loading, selectedIndex, pokemon, onClickPokemon }:
 
 PokemonList.defaultProps = {
   loading: undefined,
+  mode: undefined,
   onCatchPokemon: undefined,
 };

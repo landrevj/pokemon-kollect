@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PokemonStat } from '../../types';
+import { PokemonStat } from '../../../types';
 
 interface PokemonStatTableProps
 {

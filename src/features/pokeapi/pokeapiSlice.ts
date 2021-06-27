@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { random } from 'lodash';
 
 import type { RootState } from '../../redux';
@@ -6,7 +6,7 @@ import { fetchArrayToJson } from '../../utils';
 import { Endpoint, QueryParams, QueryResponse, NamedAPIResource, Pokemon } from './types';
 
 interface PokeapiState {
-  pokemon: Pokemon[];
+  pokemon: Pokemon | Pokemon[];
 
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
@@ -18,15 +18,12 @@ const initialState: PokeapiState = {
   error: null,
 };
 
-export const fetchPokemon = createAsyncThunk<Pokemon[], { limit?: number, offset?: number }>(
+export const fetchPokemon = createAsyncThunk<Pokemon, { idOrName: number | string }>(
   'pokeapi/fetchSearchResults',
-  async ({ limit = 10, offset = 0 }) => {
+  async ({ idOrName }) => {
 
-    const countResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
-    const responseJson: QueryResponse = await countResponse.json();
-    const urls = responseJson.results.map(res => res.url);
-    
-    const pokemon = await fetchArrayToJson<Pokemon>(urls);
+    const countResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
+    const pokemon: Pokemon = await countResponse.json();
 
     return pokemon;
 });
@@ -66,21 +63,28 @@ export const pokeapiSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchRandomPokemon.pending, state => {
+      .addMatcher(isAnyOf(fetchPokemon.pending, fetchRandomPokemon.pending), state => {
         state.status = 'loading';
       })
-      .addCase(fetchRandomPokemon.fulfilled, (state, action) => {
+      .addMatcher(isAnyOf(fetchPokemon.fulfilled, fetchRandomPokemon.fulfilled), (state, { payload: pokemon }) => {
         state.status = 'succeeded';
-        state.pokemon = action.payload;
+        state.pokemon = pokemon;
       })
-      .addCase(fetchRandomPokemon.rejected, (state, action) => {
+      .addMatcher(isAnyOf(fetchPokemon.rejected, fetchRandomPokemon.rejected), (state, { error: { message: errorMessage } }) => {
         state.status = 'failed';
-        state.error = action.error.message || null;
+        state.error = errorMessage || null;
       });
   }
 });
 
-export const selectPokemon = (state: RootState) => state.pokeapi.pokemon;
+export const selectPokemonArray = ({ pokeapi }: RootState) => {
+  if (Array.isArray(pokeapi.pokemon)) return pokeapi.pokemon;
+  return undefined;
+};
+export const selectSingularPokemon = ({ pokeapi }: RootState) => {
+  if (!Array.isArray(pokeapi.pokemon)) return pokeapi.pokemon;
+  return undefined;
+};
 
 export const {  } = pokeapiSlice.actions;
 export default pokeapiSlice.reducer;

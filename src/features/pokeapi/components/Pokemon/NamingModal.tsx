@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from '../../../../components';
 import { Pokemon } from '../../types';
 import { PokemonImage } from './Image';
-import { PokemonStat } from './Stat';
+import { PokemonStat } from './Stats';
+import { PokemonStatBubbles } from './Stats/StatBubbles';
 
 interface PokemonNamingModalProps
 {
@@ -31,15 +32,15 @@ export function PokemonNamingModal({ pokemon, onClickCatch, isOpen, onRequestClo
         <h1 className='text-3xl text-white'>Name and catch!</h1>
         <hr/>
         
-        {pokemon && <PokemonImage pokemon={pokemon} className='rounded overflow-hidden' animation='animate-bounce'/>}
+        {pokemon && (
+          <>
+            <PokemonImage pokemon={pokemon} className='rounded overflow-hidden' animation='animate-bounce'/>
+            <div className='flex flex-row flex-wrap gap-2'>
+              <PokemonStatBubbles pokemon={pokemon}/>
+            </div>
+          </>
+        )}
         
-        <div className='flex flex-row flex-wrap gap-2'>
-          <PokemonStat label={`${pokemon?.species.name} species pokemon`} value={pokemon?.species.name || ''} />
-
-          {pokemon?.types.map(({ type: { name } }, i) =>
-            <PokemonStat label={`${name} type`} value={name} key={i} />
-          )}
-        </div>
 
         <input value={name} onChange={({ target: { value } }) => setName(value) } className='rounded p-2'/>
 
