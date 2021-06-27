@@ -9,8 +9,40 @@ interface CatchState {
   pokemon: NamedPokemon[];
 };
 
+// PERSISTING TO LOCALSTORAGE
+
+// https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
+const loadCaught = () => {
+  try
+  {
+    const caught = localStorage.getItem('caught');
+    if (caught === null)
+    {
+      return undefined;
+    }
+    return JSON.parse(caught) as Pokemon[];
+  }
+  catch (err)
+  {
+    return undefined;
+  }
+};
+
+export const saveCaught = (caught: Pokemon[]) => {
+  try
+  {
+    localStorage.setItem('caught', JSON.stringify(caught));
+  }
+  catch
+  {
+    console.warn('failed to persist caught pokemon to localstorage');
+  }
+};
+
+// SLICE
+
 const initialState: CatchState = {
-  pokemon: [],
+  pokemon: loadCaught() || [],
 };
 
 export const catchSlice = createSlice({
@@ -26,7 +58,12 @@ export const catchSlice = createSlice({
   }
 });
 
+// SELECTS
+
 export const selectPokemon = (state: RootState) => state.catch.pokemon;
 
+// ACTIONS
 export const { caughtPokemon, releasedPokemonByIndex } = catchSlice.actions;
+
+// REDUCER
 export default catchSlice.reducer;
