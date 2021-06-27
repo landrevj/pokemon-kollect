@@ -44,3 +44,7 @@ a {
 .button {
   @apply text-white rounded drop-shadow ring-4 ring-white hover:ring-blue-600 backdrop-blur space-x-4;
 }
+
+.button[disabled] {
+  @apply ring-opacity-25 hover:ring-white hover:ring-opacity-25 cursor-default;
+}

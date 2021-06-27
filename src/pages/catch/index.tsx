@@ -60,10 +60,10 @@ export default function Catch()
 
           <CardHeader text='Catchable Pokémon'>
             <div className='flex-grow'/>
-            {status === 'succeeded' && selectedPokemon &&
+            {status === 'succeeded' &&
 
-              <button type='button' onClick={() => setNamingModalOpen(true)} className='px-4 py-2 button'>
-                Catch that {selectedPokemon.name}!
+              <button type='button' onClick={() => setNamingModalOpen(true)} className='px-4 py-2 button' disabled={!selectedPokemon}>
+                {selectedPokemon ? `Catch that ${selectedPokemon.name}!` : 'Select a pokemon to catch.'}
               </button>
             }
           </CardHeader>
