@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { capitalize } from 'lodash';
 
+import { Modal } from '../../../../../components';
 import { PokemonAbilityModal } from '../AbilityModal';
 import { PokemonStatTable, PokemonStatTableSkeleton } from '../Stats/Table';
 import { PokemonImage } from '../Image';
 import { NamedPokemon } from '../../../../catch';
 import Link from 'next/link';
 import { PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats/Bubbles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 interface PokemonCardProps
 {
@@ -24,6 +27,7 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
   const { name, userDefinedName, stats } = pokemon;
 
   const [abilityModalOpen, setAbilityModalOpen] = useState(false);
+  const [releaseModalOpen, setReleaseModalOpen] = useState(false);
 
   const displayName = userDefinedName ? `${userDefinedName} (${capitalize(name)})` : capitalize(name);
 
@@ -57,9 +61,20 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
         </div>
 
         <button type='button' onClick={() => setAbilityModalOpen(true)}>View Abilities</button>
-        { onReleasePokemon && <button type='button' onClick={onReleasePokemon} className='text-red-600'>Release</button>}
+        { onReleasePokemon && <button type='button' onClick={() => setReleaseModalOpen(true)} className='text-red-600'>Release</button>}
 
         <PokemonAbilityModal isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
+        <Modal isOpen={releaseModalOpen} label='release pokemon confirmation modal'>
+          <header className='space-x-2'>
+            <FontAwesomeIcon icon={faExclamationTriangle}/>
+            <h1 className='inline'>Are you sure you want to release {name}?</h1>
+          </header>
+
+          <div className='flex flex-row gap-4 justify-center mt-4'>
+            <button type='button' onClick={() => setReleaseModalOpen(false)} className='text-blue-600'>Go back!</button>
+            <button type='button' onClick={onReleasePokemon} className='text-red-600'>Release</button>
+          </div>
+        </Modal>
 
       </div>
       
