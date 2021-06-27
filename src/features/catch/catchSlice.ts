@@ -20,7 +20,7 @@ const loadCaught = () => {
     {
       return undefined;
     }
-    return JSON.parse(caught) as Pokemon[];
+    return JSON.parse(caught) as NamedPokemon[];
   }
   catch (err)
   {
@@ -28,7 +28,7 @@ const loadCaught = () => {
   }
 };
 
-export const saveCaught = (caught: Pokemon[]) => {
+export const saveCaught = (caught: NamedPokemon[]) => {
   try
   {
     localStorage.setItem('caught', JSON.stringify(caught));
