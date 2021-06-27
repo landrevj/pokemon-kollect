@@ -20,8 +20,8 @@ body::before {
   @apply animate-bg-gradient-shift bg-gradient-to-tr from-green-700 to-green-400 filter saturate-[0.7];
 }
 
-*:focus {
-  @apply ring-4 ring-blue-500;
+*:focus, :focus-visible {
+  @apply ring-4 ring-blue-500 outline-none;
 }
 
 .hero {
@@ -29,6 +29,7 @@ body::before {
   z-index: -10;
   background-image: url('../../public/bgs/forest.png');
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.75) 80%, transparent 100%);
+  mask-image:         linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.75) 80%, transparent 100%);
 }
 
 a {
@@ -38,4 +39,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.button {
+  @apply text-white rounded drop-shadow ring-4 ring-white hover:ring-blue-600 backdrop-blur space-x-4;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -8,9 +8,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { fetchRandomPokemon, selectPokemon } from '../../features/pokeapi/pokeapiSlice';
-import { PokemonList } from '../../features/pokeapi/components/Pokemon';
-import { Pokemon } from '../../features/pokeapi';
-import { caughtPokemon } from '../../features/catch';
+import { PokemonList, PokemonNamingModal } from '../../features/pokeapi/components/Pokemon';
+import { caughtPokemon, NamedPokemon } from '../../features/catch';
 import { Card, CardHeader, Hero } from '../../components';
 
 export default function Catch()
@@ -28,9 +27,19 @@ export default function Catch()
 
   }, [dispatch]);
 
-  const handleCatchPokemon = (poke: Pokemon) => {
-    dispatch(caughtPokemon(poke));
-    router.push('/', {}, { scroll: true });
+  const [namingModalOpen, setNamingModalOpen] = useState(false);
+
+  const [selectedPokemonIndex, setSelectedPokemonIndex] = useState<number | undefined>();
+  const selectedPokemon = selectedPokemonIndex !== undefined ? pokemon[selectedPokemonIndex] : undefined;
+
+  function handleCatchPokemon(name: string)
+  {
+    if (!selectedPokemon) return;
+
+    const namedPokemon: NamedPokemon = { ...selectedPokemon, userDefinedName: name};
+
+    dispatch(caughtPokemon(namedPokemon));
+    router.push('/', undefined, { scroll: true });
   };
 
   return (
@@ -41,24 +50,34 @@ export default function Catch()
       <div className='w-full'>
         <Hero/>
 
-        <main className='px-[15%] py-10 flex flex-col place-items-start'>
+        <main className='px-[15%] py-10 flex flex-col'>
           <Link href='/'>
-            <a className='text-white space-x-2 mb-10 drop-shadow'>
+            <a className='text-white space-x-2 mb-10 drop-shadow place-self-start'>
               <FontAwesomeIcon icon={faArrowLeft}/>
               <span>back</span>
             </a>
           </Link>
 
-          <CardHeader text='Catchable Pokémon'/>
+          <CardHeader text='Catchable Pokémon'>
+            <div className='flex-grow'/>
+            {status === 'succeeded' && selectedPokemon &&
+
+              <button type='button' onClick={() => setNamingModalOpen(true)} className='px-4 py-2 button'>
+                Catch that {selectedPokemon.name}!
+              </button>
+            }
+          </CardHeader>
+
           <Card label='list of catchable pokémon' translucent='bg-opacity-25'>
             {status !== 'failed' ? 
-              <PokemonList loading={status === 'loading' || status === 'idle'} pokemon={pokemon} onCatchPokemon={handleCatchPokemon}/>
+              <PokemonList loading={status === 'loading' || status === 'idle'} pokemon={pokemon} onClickPokemon={setSelectedPokemonIndex} selectedIndex={selectedPokemonIndex}/>
             : (
               <>fail</>
             )}
           </Card>
         </main>
       </div>
+      <PokemonNamingModal pokemon={selectedPokemon} onClickCatch={handleCatchPokemon} isOpen={namingModalOpen} onRequestClose={() => setNamingModalOpen(false)}/>
     </>
   );
 }

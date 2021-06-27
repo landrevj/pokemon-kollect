@@ -51,15 +51,15 @@ export type PokemonAbility = {
 // export type VersionGameIndex = {};
 // export type PokemonHeldItem = {};
 // export type PokemonMove = {};
-export type PokemonSprites = {
-  front_default: string;
-  front_shiny: string;
-  front_female: string;
-  front_shiny_female: string;
-  back_default: string;
-  back_shiny: string;
-  back_female: string;
-  back_shiny_female: string;
+export type PokemonSprites = { // originally these were just strings but it seems that they can sometimes be null?
+  front_default: string | null;
+  front_shiny: string | null;
+  front_female: string | null;
+  front_shiny_female: string | null;
+  back_default: string | null;
+  back_shiny: string | null;
+  back_female: string | null;
+  back_shiny_female: string | null;
 };
 export const POKEMON_SPRITE_WIDTH = 96;
 export const POKEMON_SPRITE_HEIGHT = 96;

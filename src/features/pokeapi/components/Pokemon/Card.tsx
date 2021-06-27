@@ -1,78 +1,45 @@
-import React from 'react';
-import Image from 'next/image';
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import { capitalize, sample } from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsAltV, faWeight, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { capitalize } from 'lodash';
+import { faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 
-
-import beachshore from '../../../../../public/bgs/beachshore.png';
-import city from '../../../../../public/bgs/city.png';
-import dampcave from '../../../../../public/bgs/dampcave.png';
-import deepsea from '../../../../../public/bgs/deepsea.png';
-import desert from '../../../../../public/bgs/desert.png';
-import earthycave from '../../../../../public/bgs/earthycave.png';
-import forest from '../../../../../public/bgs/forest.png';
-
-import { Pokemon, POKEMON_SPRITE_HEIGHT, POKEMON_SPRITE_WIDTH } from '../../types';
+import { Pokemon } from '../../types';
+import { PokemonAbilityModal } from './AbilityModal';
 import { PokemonStat } from './Stat';
 import { PokemonStatTable } from './StatTable';
+import { PokemonImage } from './Image';
+import { NamedPokemon } from '../../../catch';
 
 interface PokemonCardProps
 {
-  pokemon: Pokemon;
-  onCatchPokemon?: (poke: Pokemon) => void;
+  pokemon: NamedPokemon;
+  selected?: boolean;
+  onClickPokemon?: () => void;
   className?: string;
 }
 
-const bgs = [ beachshore, city, dampcave, deepsea, desert, earthycave, forest ];
-const t = sample(bgs);
-
-export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardProps)
+export function PokemonCard({ pokemon, selected, onClickPokemon, className }: PokemonCardProps)
 {
-  const { name, weight, height, sprites, species: { name: speciesName }, stats, types } = pokemon;
+  const { name, userDefinedName, weight, height, species: { name: speciesName }, stats, types, abilities } = pokemon;
 
-  const catchPokemonButton = onCatchPokemon && (
-    <button
-      role='button'
-      aria-label='catch pokemon'
-      className={clsx(
-        'absolute w-full h-full top-0 flex flex-col justify-center place-items-center',
-        'opacity-0 hover:opacity-100 focus:opacity-100',
-        'bg-black bg-opacity-30 hover:backdrop-blur focus:backdrop-blur text-white'
-      )}
-      onClick={() => onCatchPokemon(pokemon)}
-    >
-      Click to catch!
-    </button>
-  );
+  const [abilityModalOpen, setAbilityModalOpen] = useState(false);
+
+  const displayName = userDefinedName ? `${userDefinedName} (${capitalize(name)})` : capitalize(name);
 
   return (
-    <figure className={clsx('rounded overflow-hidden bg-gray-300', className)}>
-      <div className='relative'>
-        <Image
-          priority
-          layout='responsive'
-          src={sample(bgs) || forest} 
-          alt={`Background sprite`}
-          />
-        <div className='absolute top-0 w-full h-full flex flex-row justify-center place-items-center'>
-          <Image
-            priority
-            src={sprites.front_default}
-            alt={`Sprite image of ${name}`}
-            width={POKEMON_SPRITE_WIDTH}
-            height={POKEMON_SPRITE_HEIGHT}
-          />
-        </div>
+    <figure className={clsx('rounded bg-gray-300', className)}>
 
-        {catchPokemonButton}       
-
-      </div>
+      {onClickPokemon ? 
+        <button type='button' aria-label='catch pokemon' onClick={onClickPokemon} className='w-full rounded-t overflow-hidden'>
+          <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined}/>
+        </button>
+      :
+        <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined} className='rounded-t overflow-hidden'/>
+      }
 
       <div className='p-2 flex flex-col gap-2'>
 
-        <figcaption className='px-2 overflow-hidden overflow-ellipsis whitespace-nowrap rounded bg-gradient-to-tr from-white to-gray-200'>{capitalize(name)}</figcaption>
+        <figcaption className='px-2 overflow-hidden overflow-ellipsis whitespace-nowrap rounded bg-white'>{displayName}</figcaption>
 
         <div className='flex flex-row flex-wrap justify-center gap-2 text-base'>
           <PokemonStat icon={faWeightHanging} label='weight in kilograms' value={`${(weight / 10).toLocaleString()} kg`}/>
@@ -87,6 +54,10 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
           <PokemonStatTable stats={stats}/>
         </div>
 
+        <button type='button' onClick={() => setAbilityModalOpen(true)}>View Abilities</button>
+
+        <PokemonAbilityModal isOpen={abilityModalOpen} abilities={abilities} onRequestClose={() => setAbilityModalOpen(false)}/>
+
       </div>
       
     </figure>
@@ -94,6 +65,8 @@ export function PokemonCard({ pokemon, onCatchPokemon, className }: PokemonCardP
 }
 
 PokemonCard.defaultProps = {
+  selected: undefined,
+  onClickPokemon: undefined,
   className: '',
 };
 

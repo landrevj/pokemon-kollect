@@ -13,7 +13,7 @@ interface CardProps
 export function Card({ label, translucent, border, children, className }: CardProps)
 {
   return (
-    <div aria-label={label} className={clsx('w-full bg-white rounded p-8', translucent, translucent && 'backdrop-blur', border, className)}>
+    <div aria-label={label} className={clsx('bg-white rounded p-8', translucent, translucent && translucent !== 'bg-opacity-0' && 'backdrop-blur', border, className)}>
       {children}
     </div>
   );

@@ -1,3 +1,4 @@
+import { partial } from 'lodash';
 import React from 'react';
 
 import { Pokemon } from '../../types';
@@ -6,8 +7,9 @@ import { PokemonCard, PokemonCardSkeleton } from './Card';
 interface PokemonListProps
 {
   loading?: boolean;
+  selectedIndex?: number;
   pokemon: Pokemon[];
-  onCatchPokemon?: (poke: Pokemon) => void;
+  onClickPokemon?: (pokeIndex: number) => void;
 }
 
 const skeletons = [...Array(5)].map((_, i) =>
@@ -16,7 +18,7 @@ const skeletons = [...Array(5)].map((_, i) =>
   </li>
 );
 
-export function PokemonList({ loading, pokemon, onCatchPokemon }: PokemonListProps)
+export function PokemonList({ loading, selectedIndex, pokemon, onClickPokemon }: PokemonListProps)
 {
   // const loading=true;
   return (
@@ -24,7 +26,7 @@ export function PokemonList({ loading, pokemon, onCatchPokemon }: PokemonListPro
       {loading ? skeletons :
         pokemon?.map((poke, i) => (
           <li key={`${poke.id}_${i}`} className='w-full'>
-            <PokemonCard pokemon={poke} onCatchPokemon={onCatchPokemon}/>
+            <PokemonCard pokemon={poke} selected={selectedIndex === i} onClickPokemon={onClickPokemon && ( () => onClickPokemon(i) )}/>
           </li>
         )
       )}

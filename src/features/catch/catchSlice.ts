@@ -3,8 +3,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../redux';
 import { Pokemon } from '../pokeapi/types';
 
+export type NamedPokemon = Pokemon & { userDefinedName?: string };
+
 interface CatchState {
-  pokemon: Pokemon[];
+  pokemon: NamedPokemon[];
 };
 
 const initialState: CatchState = {
@@ -15,7 +17,7 @@ export const catchSlice = createSlice({
   name: 'catch',
   initialState,
   reducers: {
-    caughtPokemon: (state, action: PayloadAction<Pokemon>) => {
+    caughtPokemon: (state, action: PayloadAction<NamedPokemon>) => {
       state.pokemon.push(action.payload);
     },
     releasedPokemonByIndex: (state, action: PayloadAction<number>) => {

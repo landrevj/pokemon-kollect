@@ -33,7 +33,7 @@ export default function Home()
 
           <nav className='flex-grow w-1/2 min-w-min flex flex-row justify-center place-items-center p-10'>
             <Link href='/catch'>
-              <a className='p-4 rounded drop-shadow ring-4 ring-white hover:ring-blue-600 space-x-4 backdrop-blur'>
+              <a className='p-4 button'>
                 <span>Catch a Pokémon!</span>
                 <FontAwesomeIcon icon={faArrowRight}/>
               </a>
