@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { counterReducer } from '../features/counter';
-import { pokeapiReducer } from '../features/pokeapi';
+import { pokemonReducer, abilityReducer } from '../features/pokeapi';
 import { catchReducer }   from '../features/catch';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    pokeapi: pokeapiReducer,
+    pokemon: pokemonReducer,
+    ability: abilityReducer,
     catch: catchReducer,
   },
 });

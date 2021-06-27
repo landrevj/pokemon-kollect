@@ -1,8 +1,9 @@
 import { partial } from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Pokemon } from '../../types';
 import { PokemonCard, PokemonCardSkeleton } from './Card';
+import { PokemonAbilityModal } from './AbilityModal';
 
 interface PokemonListProps
 {
@@ -30,9 +31,11 @@ export function PokemonList({ loading, selectedIndex, pokemon, mode, onClickPoke
           const clickHandler = mode === 'clickable' && onClickPokemon ? () => onClickPokemon(i) : undefined;
 
           return (
+            <>
             <li key={`${poke.id}_${i}`} className='w-full'>
               <PokemonCard pokemon={poke} linkToPokemon={mode === 'linkToPokemon'} selected={selectedIndex === i} onClickPokemon={clickHandler}/>
             </li>
+            </>
           )
         }
       )}

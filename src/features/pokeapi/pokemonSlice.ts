@@ -3,33 +3,37 @@ import { random } from 'lodash';
 
 import type { RootState } from '../../redux';
 import { fetchArrayToJson } from '../../utils';
-import { Endpoint, QueryParams, QueryResponse, NamedAPIResource, Pokemon } from './types';
+import { Ability, QueryResponse, Pokemon } from './types';
 
-interface PokeapiState {
+interface PokemonState
+{
   pokemon: Pokemon | Pokemon[];
 
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 };
 
-const initialState: PokeapiState = {
+const initialState: PokemonState = {
   pokemon: [],
   status: 'idle',
   error: null,
 };
 
+// THUNKS
+
 export const fetchPokemon = createAsyncThunk<Pokemon, { idOrName: number | string }>(
-  'pokeapi/fetchSearchResults',
+  'pokeapi/fetchPokemon',
   async ({ idOrName }) => {
 
     const countResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);
     const pokemon: Pokemon = await countResponse.json();
 
     return pokemon;
-});
+  }
+);
 
 export const fetchRandomPokemon = createAsyncThunk<Pokemon[], number>(
-  'pokeapi/fetchSearchResults',
+  'pokeapi/fetchRandomPokemon',
   async (limit) => {
 
     // get the max id
@@ -55,7 +59,9 @@ export const fetchRandomPokemon = createAsyncThunk<Pokemon[], number>(
     return pokemon;
 });
 
-export const pokeapiSlice = createSlice({
+// SLICE
+
+export const pokemonSlice = createSlice({
   name: 'pokeapi',
   initialState,
   reducers: {
@@ -63,28 +69,36 @@ export const pokeapiSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addMatcher(isAnyOf(fetchPokemon.pending, fetchRandomPokemon.pending), state => {
+      .addMatcher(isAnyOf(fetchPokemon.pending, fetchRandomPokemon.pending),
+      state => {
         state.status = 'loading';
       })
-      .addMatcher(isAnyOf(fetchPokemon.fulfilled, fetchRandomPokemon.fulfilled), (state, { payload: pokemon }) => {
+      .addMatcher(isAnyOf(fetchPokemon.fulfilled, fetchRandomPokemon.fulfilled), 
+      (state, { payload: pokemon }) => {
         state.status = 'succeeded';
         state.pokemon = pokemon;
       })
-      .addMatcher(isAnyOf(fetchPokemon.rejected, fetchRandomPokemon.rejected), (state, { error: { message: errorMessage } }) => {
+      .addMatcher(isAnyOf(fetchPokemon.rejected, fetchRandomPokemon.rejected),
+      (state, { error: { message: errorMessage } }) => {
         state.status = 'failed';
         state.error = errorMessage || null;
       });
   }
 });
 
-export const selectPokemonArray = ({ pokeapi }: RootState) => {
-  if (Array.isArray(pokeapi.pokemon)) return pokeapi.pokemon;
+// SELECTS
+
+export const selectSingularPokemon = ({ pokemon }: RootState) => {
+  if (!Array.isArray(pokemon.pokemon)) return pokemon.pokemon;
   return undefined;
 };
-export const selectSingularPokemon = ({ pokeapi }: RootState) => {
-  if (!Array.isArray(pokeapi.pokemon)) return pokeapi.pokemon;
+export const selectPokemonArray = ({ pokemon }: RootState) => {
+  if (Array.isArray(pokemon.pokemon)) return pokemon.pokemon;
   return undefined;
 };
 
-export const {  } = pokeapiSlice.actions;
-export default pokeapiSlice.reducer;
+// ACTIONS
+export const {  } = pokemonSlice.actions;
+
+// REDUCER
+export default pokemonSlice.reducer;

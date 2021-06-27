@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch, useAppSelector } from '../../redux';
-import { fetchPokemon, selectSingularPokemon } from '../../features/pokeapi/pokeapiSlice';
+import { fetchPokemon, selectSingularPokemon } from '../../features/pokeapi/pokemonSlice';
 import { PokemonFullCard, PokemonFullCardSkeleton } from '../../features/pokeapi/components/Pokemon/Card';
 import { Hero } from '../../components';
 
@@ -19,7 +19,7 @@ export default function Catch()
   const dispatch = useAppDispatch();
   const pokemon = useAppSelector(selectSingularPokemon);
 
-  const status = useAppSelector(state => state.pokeapi.status);
+  const status = useAppSelector(state => state.pokemon.status);
 
   useEffect(() => {
 

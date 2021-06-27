@@ -60,7 +60,7 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
 
         <button type='button' onClick={() => setAbilityModalOpen(true)}>View Abilities</button>
 
-        <PokemonAbilityModal isOpen={abilityModalOpen} abilities={abilities} onRequestClose={() => setAbilityModalOpen(false)}/>
+        <PokemonAbilityModal isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
 
       </div>
       

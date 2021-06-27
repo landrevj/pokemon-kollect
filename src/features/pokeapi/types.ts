@@ -1,11 +1,4 @@
-export type Endpoint = 'pokemon';
-
-export type QueryParams = {
-  endpoint: Endpoint;
-  idOrName?: number | string;
-  offset?: number;
-  limit?: number;
-};
+export const POKEAPI_URL = 'https://pokeapi.co/api/v2';
 
 export type QueryResponse = {
   count: number;
@@ -14,10 +7,40 @@ export type QueryResponse = {
   results: NamedAPIResource[];
 }
 
+export type Name = {
+  name: string;
+  language: NamedAPIResource; // => Language
+};
+
 export type NamedAPIResource = {
   name: string;
   url: string;
 };
+
+export type VerboseEffect = {
+  effect: string;
+  short_effect: string;
+  language: NamedAPIResource;
+};
+
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////// ABILITY TYPES
+export type Ability = {
+  id: number;
+  name: string;
+  is_main_series: boolean;
+  generation: NamedAPIResource; // => Generation
+  
+  names: Name[];
+  effect_entries: VerboseEffect[];
+  // effect_changes: AbilityEffectChange[];
+  // flavor_text_entries: AbilityFlavorText[];
+  // pokemon: AbilityPokemon[];
+};
+
+// export type AbilityEffectChange = {};
+// export type AbilityFlavorText = {};
+// export type AbilityPokemon = {};
 
 // /////////////////////////////////////////////////////
 // /////////////////////////////////////// POKEMON TYPES
