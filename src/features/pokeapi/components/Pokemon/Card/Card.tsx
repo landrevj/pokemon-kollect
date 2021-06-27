@@ -34,18 +34,24 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
   return (
     <figure className={clsx('rounded bg-gray-300', className)}>
 
-      {onClickPokemon ? 
+      {onClickPokemon ?
+
         <button type='button' aria-label='catch pokemon' onClick={onClickPokemon} className='w-full rounded-t overflow-hidden'>
           <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined}/>
         </button>
-      : linkToPokemon ? 
+      
+      : linkToPokemon ?
+
         <Link href={`/pokemon/${encodeURIComponent(pokemon.name)}`}>
           <a className='block rounded-t'>
             <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined} className='rounded-t overflow-hidden'/>
           </a>
         </Link>
+
       :
+
         <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined} className='rounded-t overflow-hidden'/>
+      
       }
 
       <div className='p-2 flex flex-col gap-2'>
@@ -64,10 +70,10 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
         { onReleasePokemon && <button type='button' onClick={() => setReleaseModalOpen(true)} className='text-red-600'>Release</button>}
 
         <PokemonAbilityModal isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
-        <Modal isOpen={releaseModalOpen} label='release pokemon confirmation modal'>
+        <Modal isOpen={releaseModalOpen} label='release pokemon confirmation modal' onRequestClose={() => setReleaseModalOpen(false)}>
           <header className='space-x-2'>
             <FontAwesomeIcon icon={faExclamationTriangle}/>
-            <h1 className='inline'>Are you sure you want to release {name}?</h1>
+            <h1 className='inline'>Are you sure you want to release {userDefinedName || name}?</h1>
           </header>
 
           <div className='flex flex-row gap-4 justify-center mt-4'>

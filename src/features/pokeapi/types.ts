@@ -34,12 +34,16 @@ export type Ability = {
   names: Name[];
   effect_entries: VerboseEffect[];
   // effect_changes: AbilityEffectChange[];
-  // flavor_text_entries: AbilityFlavorText[];
+  flavor_text_entries: AbilityFlavorText[];
   // pokemon: AbilityPokemon[];
 };
 
 // export type AbilityEffectChange = {};
-// export type AbilityFlavorText = {};
+export type AbilityFlavorText = {
+  flavor_text: string;
+  language: NamedAPIResource; // => Language
+  version_group: NamedAPIResource; // => VersionGroup
+};
 // export type AbilityPokemon = {};
 
 // /////////////////////////////////////////////////////
