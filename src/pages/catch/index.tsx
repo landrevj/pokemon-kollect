@@ -32,8 +32,7 @@ export default function Catch()
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState<number | undefined>();
   const selectedPokemon = selectedPokemonIndex !== undefined && pokemon ? pokemon[selectedPokemonIndex] : undefined;
 
-  function handleCatchPokemon(name: string)
-  {
+  const handleCatchPokemon = (name: string) => {
     if (!selectedPokemon) return;
 
     const namedPokemon: NamedPokemon = { ...selectedPokemon, userDefinedName: name};
@@ -70,7 +69,7 @@ export default function Catch()
 
           <Card label='list of catchable pokémon' translucent='bg-opacity-25'>
             {status !== 'failed' ? 
-              <PokemonList loading={status === 'loading' || status === 'idle'} mode='clickable' pokemon={Array.isArray(pokemon) ? pokemon : []} onClickPokemon={setSelectedPokemonIndex} selectedIndex={selectedPokemonIndex}/>
+              <PokemonList loading={status === 'loading' || status === 'idle'} imageClickMode='callback' pokemon={Array.isArray(pokemon) ? pokemon : []} onClickPokemon={setSelectedPokemonIndex} selectedIndex={selectedPokemonIndex}/>
             : (
               <>fail</>
             )}

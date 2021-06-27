@@ -2,8 +2,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import { useAppDispatch, useAppSelector } from '../redux';
-import { Card, CardHeader, Hero } from '../components';
-import { selectPokemon } from '../features/catch';
+import { Card, CardHeader, Modal, Hero } from '../components';
+import { releasedPokemonByIndex, selectPokemon } from '../features/catch';
 import { PokemonList } from '../features/pokeapi/components/Pokemon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,10 @@ export default function Home()
 {
   const dispatch = useAppDispatch();
   const pokemon = useAppSelector(selectPokemon);
+
+  const handleReleasePokemon = (index: number) => {
+    dispatch(releasedPokemonByIndex(index));
+  };
 
   return (
     <>
@@ -45,7 +49,7 @@ export default function Home()
         <section aria-label='your pokémon' className='w-full px-[15%] flex flex-col -mt-20'>
           <CardHeader text='Your Pokémon' />
           <Card label='list of caught pokémon' translucent='bg-opacity-25' >
-            <PokemonList pokemon={pokemon} mode='linkToPokemon'/>
+            <PokemonList pokemon={pokemon} imageClickMode='linkToPokemon' onReleasePokemon={handleReleasePokemon}/>
             {pokemon.length === 0 && (
               <div className='w-full p-8 text-white flex flex-row justify-center place-items-center text-xl'>
                 Nothing here yet!

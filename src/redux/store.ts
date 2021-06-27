@@ -1,14 +1,12 @@
-import { AnyAction, configureStore, Store } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { debounce } from 'lodash';
 
-import { counterReducer } from '../features/counter';
 import { pokemonReducer, abilityReducer } from '../features/pokeapi';
 import { catchReducer, saveCaught }   from '../features/catch';
 
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     pokemon: pokemonReducer,
     ability: abilityReducer,
     catch: catchReducer,

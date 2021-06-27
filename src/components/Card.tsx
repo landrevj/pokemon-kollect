@@ -20,7 +20,7 @@ export function Card({ label, translucent, border, children, className }: CardPr
 }
 
 Card.defaultProps = {
-  transparent: undefined,
+  translucent: undefined,
   border: undefined,
   className: undefined,
 };

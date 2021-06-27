@@ -60,5 +60,6 @@ export function PokemonImage({ pokemon: { name, sprites }, animation, ping, clas
 
 PokemonImage.defaultProps = {
   animation: undefined,
+  ping: undefined,
   className: '',
 };

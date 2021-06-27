@@ -18,3 +18,7 @@ export function PokemonStat({ icon, label, value }: PokemonStatProps)
     </span>
   );
 }
+
+PokemonStat.defaultProps = {
+  icon: undefined,
+};

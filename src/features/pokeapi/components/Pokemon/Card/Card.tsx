@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { capitalize } from 'lodash';
-import { faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 
-import { Pokemon } from '../../../types';
 import { PokemonAbilityModal } from '../AbilityModal';
-import { PokemonStat } from '../Stats';
 import { PokemonStatTable, PokemonStatTableSkeleton } from '../Stats/StatTable';
 import { PokemonImage } from '../Image';
 import { NamedPokemon } from '../../../../catch';
@@ -18,12 +15,13 @@ interface PokemonCardProps
   linkToPokemon?: boolean;
   selected?: boolean;
   onClickPokemon?: () => void;
+  onReleasePokemon?: () => void;
   className?: string;
 }
 
-export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, className }: PokemonCardProps)
+export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, onReleasePokemon, className }: PokemonCardProps)
 {
-  const { name, userDefinedName, weight, height, species: { name: speciesName }, stats, types, abilities } = pokemon;
+  const { name, userDefinedName, stats } = pokemon;
 
   const [abilityModalOpen, setAbilityModalOpen] = useState(false);
 
@@ -59,6 +57,7 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
         </div>
 
         <button type='button' onClick={() => setAbilityModalOpen(true)}>View Abilities</button>
+        { onReleasePokemon && <button type='button' onClick={onReleasePokemon} className='text-red-600'>Release</button>}
 
         <PokemonAbilityModal isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
 

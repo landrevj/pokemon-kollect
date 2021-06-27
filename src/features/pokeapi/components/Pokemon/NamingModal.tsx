@@ -54,6 +54,7 @@ export function PokemonNamingModal({ pokemon, onClickCatch, isOpen, onRequestClo
 
 PokemonNamingModal.defaultProps = {
   pokemon: undefined,
+  onClickCatch: undefined,
   isOpen: undefined,
   onRequestClose: undefined,
 };
