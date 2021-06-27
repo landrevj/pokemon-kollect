@@ -21,12 +21,9 @@ export function AbilityList({ loading, abilities }: AbilityListProps)
   return (
     <ul className='flex flex-col gap-4'>
       {loading ? skeletons :
-      abilities.map((ability, i) => {
-        
-        return (
-          <li key={i}><AbilityCard ability={ability} /></li>
-        );
-      })}
+      abilities.map((ability, i) =>
+        <li key={i}><AbilityCard ability={ability} /></li>
+      )}
     </ul>
   );
 }
