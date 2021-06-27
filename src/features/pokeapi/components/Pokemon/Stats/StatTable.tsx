@@ -19,3 +19,10 @@ export function PokemonStatTable({ stats }: PokemonStatTableProps)
     </table>
   );
 }
+
+export function PokemonStatTableSkeleton()
+{
+  return (
+    <div className='flex-grow w-full h-10 bg-white rounded' />
+  );
+}

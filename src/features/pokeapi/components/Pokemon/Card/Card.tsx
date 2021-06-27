@@ -6,11 +6,11 @@ import { faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons
 import { Pokemon } from '../../../types';
 import { PokemonAbilityModal } from '../AbilityModal';
 import { PokemonStat } from '../Stats';
-import { PokemonStatTable } from '../Stats/StatTable';
+import { PokemonStatTable, PokemonStatTableSkeleton } from '../Stats/StatTable';
 import { PokemonImage } from '../Image';
 import { NamedPokemon } from '../../../../catch';
 import Link from 'next/link';
-import { PokemonStatBubbles } from '../Stats/StatBubbles';
+import { PokemonStatBubbles, PokemonStatBubblesSkeleton } from '../Stats/StatBubbles';
 
 interface PokemonCardProps
 {
@@ -86,13 +86,10 @@ export function PokemonCardSkeleton()
         <div className='w-full h-6 bg-white rounded-full'/>
 
         <div className='flex flex-row flex-wrap justify-center gap-2'>
-          <div className='w-16 h-6 bg-white rounded-full'/>
-          <div className='w-16 h-6 bg-white rounded-full'/>
-          <div className='w-12 h-6 bg-white rounded-full'/>
+          <PokemonStatBubblesSkeleton/>
         </div>
 
-        <div className='flex-grow w-full h-10 bg-white rounded'/>
-
+        <PokemonStatTableSkeleton/>
       </div>
     </div>
   );

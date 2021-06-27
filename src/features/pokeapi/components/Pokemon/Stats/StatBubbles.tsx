@@ -22,3 +22,14 @@ export function PokemonStatBubbles({pokemon: { weight, height, types }}: Pokemon
     </>
   );
 }
+
+export function PokemonStatBubblesSkeleton()
+{
+  return (
+    <>
+    <div className='w-16 h-6 bg-white rounded-full'/>
+    <div className='w-16 h-6 bg-white rounded-full'/>
+    <div className='w-12 h-6 bg-white rounded-full'/>
+    </>
+  );
+}
