@@ -25,7 +25,7 @@ export function PokemonNamingModal({ pokemon, onClickCatch, isOpen, onRequestClo
   }, [capitalizedDefaultName]);
 
   return (
-    <Modal transparent label='pokemon naming modal' isOpen={!!pokemon && !!isOpen} onRequestClose={onRequestClose} className='border-2 border-white border-dashed'>
+    <Modal id='NamingModal' transparent label='pokemon naming modal' isOpen={!!pokemon && !!isOpen} onRequestClose={onRequestClose} className='border-2 border-white border-dashed'>
       <section className='flex flex-col gap-4'>
 
         <h1 className='text-3xl text-white'>Name and catch!</h1>

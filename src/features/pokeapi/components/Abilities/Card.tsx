@@ -14,17 +14,17 @@ export function AbilityCard({ ability, verbose }: AbilityCardProps)
   const englishFlavorText = ability.flavor_text_entries.find(flavor => flavor.language.name === 'en');
 
   return (
-    <article className='bg-gray-200 p-4 flex flex-col gap-2 rounded'>
-      <header>{englishName?.name}</header>
+    <article className='bg-gray-200 p-4 flex flex-col gap-2 rounded' aria-label={englishName?.name || 'unnamed ability'}>
+      <h1>{englishName?.name}</h1>
       <hr className='border-gray-300'/>
 
       {verbose ?
         /* use some fallbacks for both since some abilities wont have the desired property */
-        <p>
+        <p aria-label='ability description'>
           {englishEffect?.effect || englishEffect?.short_effect || englishFlavorText?.flavor_text}
         </p>
       :
-        <p>
+        <p aria-label='ability description'>
           {englishEffect?.short_effect || englishEffect?.effect || englishFlavorText?.flavor_text}
         </p>
       }

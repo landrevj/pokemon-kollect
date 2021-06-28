@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { Card } from './Card';
 
 interface ModalProps {
+  id: string;
   label: string;
   transparent?: boolean;
   isOpen: boolean;
@@ -13,7 +14,7 @@ interface ModalProps {
   className?: string;
 }
 
-export function Modal({ label, transparent, isOpen, onRequestClose, children, className }: ModalProps) {
+export function Modal({ id, label, transparent, isOpen, onRequestClose, children, className }: ModalProps) {
   // https://github.com/reactjs/react-modal/issues/133#issuecomment-194034344
   useEffect(() => {
     ReactModal.setAppElement('body');
@@ -25,9 +26,11 @@ export function Modal({ label, transparent, isOpen, onRequestClose, children, cl
       onRequestClose={onRequestClose}
       overlayClassName='fixed inset-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm'
       className='h-full flex flex-col justify-center place-items-center pointer-events-none focus:outline-none'
+      aria={{ labelledby: id }}
     >
+      <h1 className='sr-only' id={id}>{label}</h1>
 
-      <Card label={label} translucent={transparent ? 'bg-opacity-0' : undefined} className={clsx('pointer-events-auto', className)}>
+      <Card translucent={transparent ? 'bg-opacity-0' : undefined} className={clsx('pointer-events-auto', className)}>
         {children}
       </Card>
 

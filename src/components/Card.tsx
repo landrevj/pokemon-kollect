@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 interface CardProps
 {
-  label: string;
+  label?: string;
   translucent?: 'bg-opacity-0' | 'bg-opacity-50' | 'bg-opacity-25';
   border?: 'border-dashed';
   children: React.ReactNode;
@@ -20,6 +20,7 @@ export function Card({ label, translucent, border, children, className }: CardPr
 }
 
 Card.defaultProps = {
+  label: undefined,
   translucent: undefined,
   border: undefined,
   className: undefined,
