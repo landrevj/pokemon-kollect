@@ -61,8 +61,8 @@ export default function Catch()
             <div className='flex-grow'/>
             {status === 'succeeded' &&
 
-              <button type='button' onClick={() => setNamingModalOpen(true)} className='px-4 py-2 button' disabled={!selectedPokemon}>
-                {selectedPokemon ? `Catch that ${selectedPokemon.name}!` : 'Select a pokemon to catch.'}
+              <button type='button' aria-label='Select a pokémon first!' onClick={() => setNamingModalOpen(true)} className='px-4 py-2 button' disabled={!selectedPokemon}>
+                {selectedPokemon ? `Catch that ${selectedPokemon.name}!` : 'Select a pokémon first!'}
               </button>
             }
           </CardHeader>

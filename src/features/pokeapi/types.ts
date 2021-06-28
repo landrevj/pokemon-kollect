@@ -18,9 +18,14 @@ export type NamedAPIResource = {
 };
 
 export type VerboseEffect = {
-  effect: string;
-  short_effect: string;
+  effect: string | null;
+  short_effect: string | null;
   language: NamedAPIResource;
+};
+
+export type VersionGameIndex = {
+  game_index: number;
+  version: NamedAPIResource; // => Version
 };
 
 // /////////////////////////////////////////////////////
@@ -59,11 +64,11 @@ export type Pokemon = {
   weight: number; // measured in hectograms (1/10 of 1 kg)
   
   abilities: PokemonAbility[];
-  // forms: NamedAPIResource[]; // => PokemonForm
-  // game_indicies: VersionGameIndex[];
-  // held_items: PokemonHeldItem[];
-  // location_area_encounters: string;
-  // moves: PokemonMove[];
+  forms: NamedAPIResource[]; // => PokemonForm
+  game_indices: VersionGameIndex[];
+  held_items: PokemonHeldItem[];
+  location_area_encounters: string;
+  moves: PokemonMove[];
   sprites: PokemonSprites;
   species: NamedAPIResource; // => PokemonSpecies
   stats: PokemonStat[];
@@ -75,9 +80,28 @@ export type PokemonAbility = {
   slot: number;
   ability: NamedAPIResource; // => Ability
 };
-// export type VersionGameIndex = {};
-// export type PokemonHeldItem = {};
-// export type PokemonMove = {};
+
+export type PokemonHeldItem = {
+  item: NamedAPIResource; // => Item
+  version_details: PokemonHeldItemVersion[];
+};
+
+export type PokemonHeldItemVersion = {
+  version: NamedAPIResource; // => Version
+  rarity: number;
+}
+
+export type PokemonMove = {
+  move: NamedAPIResource; // => Move
+  version_group_details: PokemonMoveVersion[];
+};
+
+export type PokemonMoveVersion = {
+  move_learn_method: NamedAPIResource; // => MoveLearnMethod
+  version_group: NamedAPIResource; // => VersionGroup
+  level_learned_at: number;
+}
+
 export type PokemonSprites = { // originally these were just strings but it seems that they can sometimes be null?
   front_default: string | null;
   front_shiny: string | null;

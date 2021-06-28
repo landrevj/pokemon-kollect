@@ -14,6 +14,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 interface PokemonCardProps
 {
+  id: string;
   pokemon: NamedPokemon;
   linkToPokemon?: boolean;
   selected?: boolean;
@@ -22,7 +23,7 @@ interface PokemonCardProps
   className?: string;
 }
 
-export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, onReleasePokemon, className }: PokemonCardProps)
+export function PokemonCard({ id, pokemon, linkToPokemon, selected, onClickPokemon, onReleasePokemon, className }: PokemonCardProps)
 {
   const { name, userDefinedName, stats } = pokemon;
 
@@ -32,18 +33,18 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
   const displayName = userDefinedName ? `${userDefinedName} (${capitalize(name)})` : capitalize(name);
 
   return (
-    <figure className={clsx('rounded bg-gray-300', className)}>
+    <article className={clsx('rounded bg-gray-300', className)} aria-label={`${name} card`}>
 
       {onClickPokemon ?
 
-        <button type='button' aria-label='catch pokemon' onClick={onClickPokemon} className='w-full rounded-t overflow-hidden'>
+        <button type='button' aria-label='select pokemon' onClick={onClickPokemon} className='w-full rounded-t overflow-hidden'>
           <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined}/>
         </button>
       
       : linkToPokemon ?
 
         <Link href={`/pokemon/${encodeURIComponent(pokemon.name)}`}>
-          <a className='block rounded-t'>
+          <a className='block rounded-t' aria-label={`link to ${pokemon.name}'s page`}>
             <PokemonImage pokemon={pokemon} animation={selected ? 'animate-bounce' : undefined} className='rounded-t overflow-hidden'/>
           </a>
         </Link>
@@ -56,7 +57,7 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
 
       <div className='p-2 flex flex-col gap-2'>
 
-        <figcaption className='px-2 overflow-hidden overflow-ellipsis rounded bg-white'>{displayName}</figcaption>
+        <h1 className='px-2 overflow-hidden overflow-ellipsis rounded bg-white'>{displayName}</h1>
 
         <div className='flex flex-row flex-wrap justify-center gap-2 text-base'>
           <PokemonStatBubbles pokemon={pokemon}/>
@@ -69,8 +70,8 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
         <button type='button' onClick={() => setAbilityModalOpen(true)}>View Abilities</button>
         { onReleasePokemon && <button type='button' onClick={() => setReleaseModalOpen(true)} className='text-red-600'>Release</button>}
 
-        <PokemonAbilityModal isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
-        <Modal isOpen={releaseModalOpen} label='release pokemon confirmation modal' onRequestClose={() => setReleaseModalOpen(false)}>
+        <PokemonAbilityModal id={`${id}${pokemon.name}`} isOpen={abilityModalOpen} pokemon={pokemon} onRequestClose={() => setAbilityModalOpen(false)}/>
+        <Modal id={`${id}${pokemon.name}ReleaseModal`} isOpen={releaseModalOpen} label='release pokemon confirmation modal' onRequestClose={() => setReleaseModalOpen(false)}>
           <header className='space-x-2'>
             <FontAwesomeIcon icon={faExclamationTriangle}/>
             <h1 className='inline'>Are you sure you want to release {userDefinedName || name}?</h1>
@@ -84,7 +85,7 @@ export function PokemonCard({ pokemon, linkToPokemon, selected, onClickPokemon, 
 
       </div>
       
-    </figure>
+    </article>
   );
 }
 

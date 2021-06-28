@@ -5,6 +5,7 @@ import { AbilityCard } from './Card';
 
 interface AbilityListProps
 {
+  verbose?: boolean;
   loading?: boolean;
   abilities: Ability[];
 }
@@ -16,18 +17,19 @@ const skeletons = (
   </>
 )
 
-export function AbilityList({ loading, abilities }: AbilityListProps)
+export function AbilityList({ verbose, loading, abilities }: AbilityListProps)
 {
   return (
-    <ul className='flex flex-col gap-4'>
-      {loading ? skeletons :
-      abilities.map((ability, i) =>
-        <li key={i}><AbilityCard ability={ability} /></li>
+    loading ? skeletons :
+    <ul className='flex flex-col gap-4' aria-label='ability list'>
+      {abilities.map((ability, i) =>
+        <li key={i}><AbilityCard ability={ability} verbose={verbose} /></li>
       )}
     </ul>
   );
 }
 
 AbilityList.defaultProps = {
+  verbose: undefined,
   loading: undefined,
 };

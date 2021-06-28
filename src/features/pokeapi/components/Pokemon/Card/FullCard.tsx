@@ -17,12 +17,12 @@ export function PokemonFullCard({ pokemon }: PokemonFullCardProps)
   
   return (
     <Card label='pokemon info card' className='grid grid-flow-row grid-cols-1 lg:grid-cols-3 gap-8'>
-      <section className='flex flex-col gap-4'>
+      <section className='flex flex-col gap-4' aria-label='pokemon sprite and stat table'>
         <PokemonImage pokemon={pokemon} className='rounded overflow-hidden' />
         <PokemonStatTable stats={pokemon.stats} />
       </section>
 
-      <section className='col-span-2 flex flex-col gap-4'>
+      <section className='col-span-2 flex flex-col gap-4' aria-label='pokemon name and ability description list'>
         <h1 className='text-5xl'>{capitalize(pokemon.name)}</h1>
         
         <hr />
@@ -32,7 +32,7 @@ export function PokemonFullCard({ pokemon }: PokemonFullCardProps)
         </div>
 
         <h2 className='mt-4'>Abilities</h2>
-        <PokemonAbilityList pokemon={pokemon} />
+        <PokemonAbilityList pokemon={pokemon} verbose/>
 
       </section>
 

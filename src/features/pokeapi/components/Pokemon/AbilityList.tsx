@@ -6,10 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../../../redux';
 import { fetchAbilitiesByPokemon, selectAbilities } from '../../abilitySlice';
 
 interface PokemonAbilityModalProps {
+  verbose?: boolean;
   pokemon: Pokemon;
 }
 
-export function PokemonAbilityList({ pokemon }: PokemonAbilityModalProps) {
+export function PokemonAbilityList({ verbose, pokemon }: PokemonAbilityModalProps) {
   const dispatch = useAppDispatch();
   const abilities = useAppSelector(selectAbilities);
 
@@ -22,6 +23,10 @@ export function PokemonAbilityList({ pokemon }: PokemonAbilityModalProps) {
   }, [dispatch, pokemon]);
 
   return (
-    <AbilityList abilities={abilities} loading={status === 'idle' || status === 'loading'}/>
+    <AbilityList abilities={abilities} loading={status === 'idle' || status === 'loading'} verbose={verbose}/>
   );
 }
+
+PokemonAbilityList.defaultProps = {
+  verbose: undefined,
+};

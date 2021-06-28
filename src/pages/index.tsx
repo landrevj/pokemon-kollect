@@ -24,7 +24,7 @@ export default function Home()
       </Head>
       <main className='w-full pb-10'>
 
-        <section className='h-screen flex flex-row flex-wrap text-white pb-40'>
+        <section className='h-screen flex flex-row flex-wrap text-white pb-40' aria-label='title and navigation'>
 
           <Hero/>
 
@@ -46,9 +46,9 @@ export default function Home()
 
         </section>
 
-        <section aria-label='your pokémon' className='w-full px-[15%] flex flex-col -mt-20'>
+        <section aria-label='your caught pokémon' className='w-full px-[15%] flex flex-col -mt-20'>
           <CardHeader text='Your Pokémon' />
-          <Card label='list of caught pokémon' translucent='bg-opacity-25' >
+          <Card translucent='bg-opacity-25' >
             <PokemonList pokemon={pokemon} imageClickMode='linkToPokemon' onReleasePokemon={handleReleasePokemon}/>
             {pokemon.length === 0 && (
               <div className='w-full p-8 text-white flex flex-row justify-center place-items-center text-xl'>
