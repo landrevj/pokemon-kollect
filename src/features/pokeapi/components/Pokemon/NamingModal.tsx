@@ -25,10 +25,10 @@ export function PokemonNamingModal({ pokemon, onClickCatch, isOpen, onRequestClo
   }, [capitalizedDefaultName]);
 
   return (
-    <Modal id='NamingModal' transparent label='pokemon naming modal' isOpen={!!pokemon && !!isOpen} onRequestClose={onRequestClose} className='border-2 border-white border-dashed'>
+    <Modal id='NamingModal' label='pokemon naming modal' isOpen={!!pokemon && !!isOpen} onRequestClose={onRequestClose} className='border-2 border-white border-dashed'>
       <section className='flex flex-col gap-4'>
 
-        <h1 className='text-3xl text-white'>Name and catch!</h1>
+        <h1 className='text-3xl'>Name and catch!</h1>
         <hr/>
         
         {pokemon && (
@@ -41,11 +41,11 @@ export function PokemonNamingModal({ pokemon, onClickCatch, isOpen, onRequestClo
         )}
         
 
-        <input value={name} onChange={({ target: { value } }) => setName(value) } className='rounded p-2'/>
+        <input value={name} onChange={({ target: { value } }) => setName(value) } className='rounded p-2 bg-gray-200'/>
 
         <hr/>
 
-        <button type='button' className='button p-2' onClick={onClickCatch && (() => onClickCatch(name)) }>Catch!</button>
+        <button type='button' className='button-dark p-2' onClick={onClickCatch && (() => onClickCatch(name)) }>Catch!</button>
       </section>
     </Modal>
   );
