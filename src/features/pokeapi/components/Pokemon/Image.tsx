@@ -38,7 +38,7 @@ export function PokemonImage({ pokemon: { name, sprites }, animation, ping, clas
         alt={`Background sprite`}
         width={753}
         height={500}
-        />
+      />
         
       <div className={clsx('absolute top-0 w-full h-full flex flex-row justify-center place-items-center', animation)}>
         {sprites.front_default ?

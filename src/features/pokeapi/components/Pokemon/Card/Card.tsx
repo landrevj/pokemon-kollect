@@ -93,6 +93,7 @@ PokemonCard.defaultProps = {
   linkToPokemon: undefined,
   selected: undefined,
   onClickPokemon: undefined,
+  onReleasePokemon: undefined,
   className: '',
 };
 

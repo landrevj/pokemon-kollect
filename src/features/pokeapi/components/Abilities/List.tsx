@@ -22,8 +22,8 @@ export function AbilityList({ verbose, loading, abilities }: AbilityListProps)
   return (
     loading ? skeletons :
     <ul className='flex flex-col gap-4' aria-label='ability list'>
-      {abilities.map((ability, i) =>
-        <li key={i}><AbilityCard ability={ability} verbose={verbose} /></li>
+      {abilities.map(ability =>
+        <li key={ability.id}><AbilityCard ability={ability} verbose={verbose} /></li>
       )}
     </ul>
   );

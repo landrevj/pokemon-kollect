@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../../../../../../../.jest/test-utils';
+import { render, screen } from '../../../../../../../.jest/test-utils';
 import { capitalize } from 'lodash';
 
 import { PokemonCard } from '../Card';

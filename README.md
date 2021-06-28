@@ -17,7 +17,7 @@ A frontend for specific parts of the [PokeApi](https://pokeapi.co/) using:
   - A button for each pokemon to release it.
   - Links to:
     - A page where you can catch pokemon.
-    - A page were you can view a specific pokemon in more detail.
+    - A page where you can view a specific pokemon in more detail.
 - Catch a Pokemon Page
   - Ten randomly chosen pokemon to catch from.
   - Click a pokemon's image to select it, then click the catch button at the top of the page to name it before catching it.
@@ -25,7 +25,7 @@ A frontend for specific parts of the [PokeApi](https://pokeapi.co/) using:
   - Displays a sprite, stats, and full ability descriptions for the specified pokemon.
 - Other
   - Click on the `View Abilities` button found at the bottom of a pokemon's card at any time to view short descriptions of it's abilities.
-  - A minor amout of testing.
+  - A relatively small amount of testing.
 
 ## Running locally
 

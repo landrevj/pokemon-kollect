@@ -17,7 +17,7 @@ export function PokemonStatBubbles({pokemon: { weight, height, types }}: Pokemon
       <PokemonStat icon={faArrowsAltV} label='height in meters' value={`${(height / 10).toLocaleString()} m`} />
 
       {types.map(({ type: { name } }, i) =>
-        <PokemonStat label={`${name} type`} value={name} key={i} />
+        <PokemonStat label={`${name} type`} value={name} key={`${name}_${i}`} />
       )}
     </>
   );
